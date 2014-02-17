@@ -24,6 +24,7 @@ import java.util.ArrayList;
  */
 public class CountyDatabase
 {
+	//Variable used to store the counties in the county database
 	private ArrayList<County> counties;
 	
 	/**
@@ -42,12 +43,13 @@ public class CountyDatabase
 	 */
 	void addCounty(String name) 
 	{
+		//Variable used to create a county with the given name
 		County county = new County(name);
 		this.counties.add(county);
 	}
 	
 	/**
-	 * Add the given storm storm to county county in the database. 
+	 * Add the given storm storm to county county in the database.
 	 * If county county is not in the database 
 	 * throw a java.lang.IllegalArgumentException.
 	 *
@@ -58,8 +60,7 @@ public class CountyDatabase
 	{
 		if (!this.containsCounty(county))
 		{
-			throw new IllegalArgumentException(
-			"The county you were trying to add a storm to, is not in the database");
+			throw new IllegalArgumentException();
 		}
 		else
 		{
@@ -93,7 +94,7 @@ public class CountyDatabase
 	}
 	
 	/**
-	 * Return true iff storm with the name storm appears in at 
+	 * Return true iff storm with the name storm appears in at
 	 * least one county's list of storms in the database.
 	 *
 	 * @param storm
@@ -101,11 +102,12 @@ public class CountyDatabase
 	 */
 	boolean containsStorm(String storm) 
 	{
-		for (int i = 0; i < counties.size(); i++)
+		for (int i = 0; i < this.counties.size(); i++)
 		{
-			for (int j = 0; j < counties.get(i).getStorms().size(); j++)
+			for (int j = 0; j < this.counties.get(i).getStorms().size(); j++)
 			{
-				if (counties.get(i).getStorms().get(j).getName().equals(storm))
+				if (this.counties.get(i).getStorms().get(j).getName().
+				equals(storm))
 				{
 					return true;
 				}
@@ -131,13 +133,15 @@ public class CountyDatabase
 		}
 		else
 		{
-			for (int i = 0; i < counties.size(); i++)
+			for (int i = 0; i < this.counties.size(); i++)
 			{
-				if (counties.get(i).getName().equals(county))
+				if (this.counties.get(i).getName().equals(county))
 				{
-					for (int j = 0; j < counties.get(i).getStorms().size(); j++)
+					for (int j = 0; j < this.counties.get(i).getStorms()
+					.size(); j++)
 					{
-						if (counties.get(i).getStorms().get(j).getName().equals(storm))
+						if (this.counties.get(i).getStorms().get(j).getName()
+						.equals(storm))
 						{
 							return true;
 						}
@@ -158,14 +162,18 @@ public class CountyDatabase
 	 */
 	List<Storm> getStormsWithDamageAmount(Integer amount) 
 	{
+		//Variable used to store the array list of storms with the 
+		//specified damage amount
 		List<Storm> specificDamageStormList = new ArrayList<Storm>();
 		for (int i = 0; i < this.counties.size(); i++)
 		{
 			for (int j = 0; j < this.counties.get(i).getStorms().size(); j++)
 			{
-				if (this.counties.get(i).getStorms().get(j).getDamageAmount().equals(amount))
+				if (this.counties.get(i).getStorms().get(j).getDamageAmount()
+				.equals(amount))
 				{
-					specificDamageStormList.add(this.counties.get(i).getStorms().get(j));
+					specificDamageStormList.add(this.counties.get(i).
+					getStorms().get(j));
 				}
 			}
 		}
@@ -182,14 +190,18 @@ public class CountyDatabase
 	 */
 	List<Storm> getStormsWithDate(String date) 
 	{
+		//Variable used to store the array list of storms with the specified
+		//date
 		List<Storm> specificDateStormList = new ArrayList<Storm>();
 		for (int i = 0; i < this.counties.size(); i++)
 		{
 			for (int j = 0; j < this.counties.get(i).getStorms().size(); j++)
 			{
-				if (this.counties.get(i).getStorms().get(j).getDate().equals(date))
+				if (this.counties.get(i).getStorms().get(j).getDate().equals(
+				date))
 				{
-					specificDateStormList.add(this.counties.get(i).getStorms().get(j));
+					specificDateStormList.add(this.counties.get(i).getStorms()
+					.get(j));
 				}
 			}
 		}
@@ -205,14 +217,18 @@ public class CountyDatabase
 	 */
 	List<Storm> getStormsWithName(String name) 
 	{
+		//Variable used to store the array list of storms with the specified 
+		//name
 		List<Storm> specificNameStormList = new ArrayList<Storm>();
 		for (int i = 0; i < this.counties.size(); i++)
 		{
 			for (int j = 0; j < this.counties.get(i).getStorms().size(); j++)
 			{
-				if (this.counties.get(i).getStorms().get(j).getName().equals(name))
+				if (this.counties.get(i).getStorms().get(j).getName().equals(
+				name))
 				{
-					specificNameStormList.add(this.counties.get(i).getStorms().get(j));
+					specificNameStormList.add(this.counties.get(i).getStorms().
+					get(j));
 				}
 			}
 		}
@@ -239,23 +255,27 @@ public class CountyDatabase
 	}
 	
 	/**
-	 * Get the percentage of storms in the database that have a damage amount of 0. 
-	 * There are multiple ways to implement this method, some more efficient than 
-	 * others. Can you think of an implementation that avoids searching through 
-	 * the entire database each time this method is called? 
+	 * Get the percentage of storms in the database that have a damage amount
+	 * of 0. There are multiple ways to implement this method, some more
+	 * efficient than others. Can you think of an implementation that avoids
+	 * searching through the entire database each time this method is called?
 	 *
 	 * @return double
 	 */
 	double getPercentageOfStormsNoDamage() 
 	{
+		//Variable used to store the percentage of storms with no damage
 		double percentage = 0;
+		//Variable used to store the array list of storms with the no damage
 		List<Storm> noDamageStormList = new ArrayList<Storm>();
 		noDamageStormList = this.getStormsWithDamageAmount(0);
 		
+		//Variable used to store the total number of storms in the county 
+		//database
 		int totalStorms = 0;
-		for (int i = 0; i < counties.size(); i++)
+		for (int i = 0; i < this.counties.size(); i++)
 		{
-			totalStorms += counties.get(i).getStorms().size();
+			totalStorms += this.counties.get(i).getStorms().size();
 		}
 		percentage = ((double)noDamageStormList.size() / totalStorms) * 100;
 		
@@ -272,37 +292,48 @@ public class CountyDatabase
 	 */
 	Iterator<County> iterator() 
 	{
-		Iterator<County> iterator = counties.iterator();
+		//Variable used to iterate through the county database
+		Iterator<County> iterator = this.counties.iterator();
 		return iterator;
 	}
 	
 	/**
-	 * Print the names, dates, and damage amounts of the three storms that have the 
-	 * largest damage amounts, 1 storm per line. You must find the 3 most expensive 
-	 * storms and print out the information previously stated for those 3 storms. The 
-	 * storms should be printed in descending order (i.e. most expensive storm(s) first). 
-	 * DO NOT worry about handling ties (i.e. storms that have the same damage amount) 
-	 * as we will not test for this. It is fine to use Collections.sort() to sort a List 
-	 * of Integers. However, (hint hint) there may be a better/easier way to keep track 
-	 * of the 3 most expensive storms instead of sorting through the entire database. 
+	 * Print the names, dates, and damage amounts of the three storms that have
+	 * the largest damage amounts, 1 storm per line. You must find the 3 most 
+	 * expensive storms and print out the information previously stated for 
+	 * those 3 storms. The storms should be printed in descending order (i.e.
+	 * most expensive storm(s) first). DO NOT worry about handling ties (i.e.
+	 * storms that have the same damage amount) as we will not test for this.
+	 * It is fine to use Collections.sort() to sort a List of Integers. 
+	 * However, (hint hint) there may be a better/easier way to keep track of
+	 * the 3 most expensive storms instead of sorting through the entire 
+	 * database.
 	 */
 	void printThreeMostExpensiveStorms() 
 	{
+		//Variable used to store the damage amounts of all storms, to figure 
+		//out the three most expensive storms
 		ArrayList<Integer> allStormDamageAmounts = new ArrayList<Integer>();
+		//Variable used to iterate through the list of counties in the county
+		//database
 		Iterator<County> iterator = this.iterator();
 		while (iterator.hasNext())
 		{
+			//Variable used to store the county that the iterator is pointing 
+			//to
 			County currentCounty = iterator.next();
-			List<Storm> currentCountyStorms = this.getStormsFromCounty(currentCounty.getName());
+			List<Storm> currentCountyStorms = this.getStormsFromCounty(
+			currentCounty.getName());
 			for (int i = 0; i < currentCountyStorms.size(); i++)
 			{
-				allStormDamageAmounts.add(currentCountyStorms.get(i).getDamageAmount());
+				allStormDamageAmounts.add(currentCountyStorms.get(i).
+				getDamageAmount());
 			}
 		}
+		
 		Collections.sort(allStormDamageAmounts);
 		Collections.reverse(allStormDamageAmounts);
 		
-		System.out.println("Most expensive storms:");
 		System.out.println(this.getStormsWithDamageAmount(
 				allStormDamageAmounts.get(0)).get(0).getName() + 
 				", " + this.getStormsWithDamageAmount(
@@ -324,8 +355,9 @@ public class CountyDatabase
 	}
 	
 	/**
-	 * Remove county county from the database. If county county is not in the database, 
-	 * return false; otherwise (i.e., the removal is successful) return true. 
+	 * Remove county county from the database. If county county is not in the
+	 * database, return false; otherwise (i.e., the removal is successful) 
+	 * return true. 
 	 *
 	 * @param county
 	 * @return boolean
@@ -334,11 +366,11 @@ public class CountyDatabase
 	{
 		if (this.containsCounty(county))
 		{
-			for (int i = 0; i < counties.size(); i++)
+			for (int i = 0; i < this.counties.size(); i++)
 			{
-				if (counties.get(i).getName().equals(county))
+				if (this.counties.get(i).getName().equals(county))
 				{
-					counties.remove(i);
+					this.counties.remove(i);
 					return true;
 				}
 			}
@@ -349,24 +381,33 @@ public class CountyDatabase
 	/**
 	 * Remove all storms with the name storm from the database. If 
 	 * there are no storms with the name storm in the database, return 
-	 * false; otherwise (i.e., the removal is successful) return true. 
+	 * false; otherwise (i.e., the removal is successful) return true.
 	 *
 	 * @param storm
 	 * @return boolean
 	 */
 	boolean removeStormsWithName(String storm) 
 	{
+		//Variable used to check whether the storm with the given name has been
+		//removed
 		boolean removed = false;
 		
 		if (!this.containsStorm(storm))
 		{
 			return removed;
 		}
+		//Variable used to iterate through the list of counties in the county 
+		//database
 		Iterator<County> iterator = this.iterator();
 		while (iterator.hasNext())
 		{
+			//Variable used to store the county that the iterator is pointing 
+			//to
 			County currentCounty = iterator.next();
-			List<Storm> currentCountyStorms = this.getStormsFromCounty(currentCounty.getName());
+			//Variable used to store the array list of storms of the current
+			//county
+			List<Storm> currentCountyStorms = this.getStormsFromCounty(
+			currentCounty.getName());
 			for (int i = 0; i < currentCountyStorms.size(); i++)
 			{
 				if (currentCountyStorms.get(i).getName().equals(storm))
@@ -383,27 +424,32 @@ public class CountyDatabase
 	 *  Remove storms with damage amount damage from the database, i.e.,
 	 *  remove ALL storms that have the damage amount damage from the 
 	 *  database. If storms with the damage amount damage are not in 
-	 *  the database, return false; otherwise (i.e., the removal 
+	 *  the database, return false; otherwise (i.e., the removal
 	 *  is successful) return true. 
 	 *
 	 * @param damage
 	 * @return boolean
 	 */
-	boolean removeStormsWithDamageAmount(Integer damage) 
+	boolean removeStormsWithDamageAmount(Integer damage)
 	{
+		//Variable used to check whether the storm with the given damage
+		//has been removed
 		boolean removed = false;
+		//Variable used to store the array list of storms with the given
+		//damage amount
 		List<Storm> storms = new ArrayList<Storm>(); 
 		storms = this.getStormsWithDamageAmount(damage);
 		
-		for (int i = 0; i < counties.size(); i++)
+		for (int i = 0; i < this.counties.size(); i++)
 		{
-			for (int j = 0; j < counties.get(i).getStorms().size(); j++)
+			for (int j = 0; j < this.counties.get(i).getStorms().size(); j++)
 			{
 				for (int x = 0; x < storms.size(); x++)
 				{
-					if (counties.get(i).getStorms().get(j).equals(storms.get(x)))
+					if (this.counties.get(i).getStorms().get(j).equals(
+					storms.get(x)))
 					{
-						counties.get(i).getStorms().remove(j);
+						this.counties.get(i).getStorms().remove(j);
 						removed = true;
 					}
 				}
@@ -419,6 +465,6 @@ public class CountyDatabase
 	 */
 	int size() 
 	{
-		return counties.size();
+		return this.counties.size();
 	}
 }
